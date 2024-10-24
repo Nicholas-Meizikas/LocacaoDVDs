@@ -10,6 +10,7 @@ import locacaoDVDs.Entidades.*;
 import java.sql.PreparedStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
         
 /**
  *
@@ -28,11 +29,16 @@ public class DVDDAO extends dao<DVD>{
                                                               (titulo, ano_lancamento, data_lancamento,
                                                                duracao_minutos, ator_principal_id, ator_coadjuvante_id,
                                                               genero_id, classificacao_etaria_id)
-                                                              VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)""") ;
+                                                              VALUES ( ?, ?, ?, ?, ?, ?, ?, ?) ;""") ;
         
         sql.setString(1, obj.getTitulo());
         sql.setInt(2, obj.getAnoLancamento());
         sql.setDate(3, obj.getDataLancamento());
+        sql.setInt(4, obj.getDuracaoMinutos());
+        sql.setInt(5, obj.getAtorPrincipal().getId());
+        sql.setInt(6, obj.getAtorCoadjuvante().getId());
+        sql.setInt(7, obj.getGenero().getId());
+        sql.setInt(8, obj.getClasEt().getId());
         
         sql.executeUpdate() ;
         sql.close();
@@ -41,22 +47,61 @@ public class DVDDAO extends dao<DVD>{
 
     @Override
     public void atualizar(DVD obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement sql = getConexao().prepareStatement("""
+                                                              UPDATE dvd 
+                                                              SET titulo = ?,
+                                                                ano_lancamento = ?, 
+                                                                data_lancamento = ?,
+                                                                duracao_minutos = ?,
+                                                                ator_principal_id = ?,
+                                                                ator_coadjuvante_id = ?,
+                                                                genero_id = ?, 
+                                                                classificacao_etaria_id = ?
+                                                              WHERE id = ? ;""") ;
+        
+        sql.setString(1, obj.getTitulo());
+        sql.setInt(2, obj.getAnoLancamento());
+        sql.setDate(3, obj.getDataLancamento());
+        sql.setInt(4, obj.getDuracaoMinutos());
+        sql.setInt(5, obj.getAtorPrincipal().getId());
+        sql.setInt(6, obj.getAtorCoadjuvante().getId());
+        sql.setInt(7, obj.getGenero().getId());
+        sql.setInt(8, obj.getClasEt().getId());
+        sql.setInt(9, obj.getId());
+        
+        sql.executeUpdate() ;
+        sql.close();
+        
     }
 
     @Override
     public void excluir(DVD obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement sql = getConexao().prepareStatement("""
+                                                              DELETE FROM dvd
+                                                              WHERE id = ? ;""") ;
+        
+        
+        sql.setInt(1, obj.getClasEt().getId());
+        
+        sql.executeUpdate() ;
+        sql.close();
     }
 
     @Override
     public List<DVD> selecionarTodos() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        
+        List<DVD> lista = new ArrayList<>() ;
+        
+        return lista ;
     }
 
     @Override
     public DVD selecionarPorID(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DVD d = null ;
+        
+        return d ;
+                
     }
     
 }
