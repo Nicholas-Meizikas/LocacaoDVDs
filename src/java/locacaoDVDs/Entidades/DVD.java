@@ -13,7 +13,7 @@ public class DVD {
     
     private int id ;
     private Genero genero ;
-    private ClassificacaoEtaria ClasEt ;
+    private ClassificacaoEtaria Etaria ;
     private Ator atorPrincipal ;
     private Ator atorCoadjuvante ;
     private String titulo ;
@@ -37,12 +37,12 @@ public class DVD {
         this.genero = genero;
     }
 
-    public ClassificacaoEtaria getClasEt() {
-        return ClasEt;
+    public ClassificacaoEtaria getEtaria() {
+        return Etaria;
     }
 
-    public void setClasEt(ClassificacaoEtaria ClasEt) {
-        this.ClasEt = ClasEt;
+    public void setEtaria(ClassificacaoEtaria Etaria) {
+        this.Etaria = Etaria;
     }
 
     public Ator getAtorPrincipal() {
@@ -95,7 +95,7 @@ public class DVD {
 
     @Override
     public String toString() {
-        return "DVD{" + "id=" + id + ",\n genero=" + genero.toString() + ",\n ClasEt=" + ClasEt.toString() + ",\n atorPrincipal=" + atorPrincipal.toString() + ",\n atorCoadjuvante=" + atorCoadjuvante.toString() + ", titulo=" + titulo + ", anoLancamento=" + anoLancamento + ", dataLancamento=" + dataLancamento + ", duracaoMinutos=" + duracaoMinutos + '}';
+        return "DVD{" + "id=" + id + ",\n genero=" + genero.toString() + ",\n ClasEt=" + Etaria.toString() + ",\n atorPrincipal=" + atorPrincipal.toString() + ",\n atorCoadjuvante=" + atorCoadjuvante.toString() + ", titulo=" + titulo + ", anoLancamento=" + anoLancamento + ", dataLancamento=" + dataLancamento + ", duracaoMinutos=" + duracaoMinutos + '}';
     }
     
     

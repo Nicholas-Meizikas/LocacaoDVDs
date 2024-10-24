@@ -90,15 +90,100 @@ public class DVDDAO extends dao<DVD>{
     @Override
     public List<DVD> selecionarTodos() throws SQLException {
         
+        PreparedStatement sql = getConexao().prepareStatement("""
+                                                              SELECT dvd.id, dvd.titulo, dvd.ano_lancamento anoL, dvd.data_lancamento dataL,
+                                                              dvd.duracao_minutos duracao, ator.id atorPrincipal, ator.id atorCoadjuvante,
+                                                              g.id idGen, ce.id idEtaria
+                                                              FROM dvd, ator, genero g, classificao_etaria ce 
+                                                              WHERE 
+                                                                dvd.ator_principal_id = ator.id AND
+                                                                dvd.ator_coadjuvante_id = ator.id AND
+                                                                dvd.genero_id = g.id AND
+                                                                dvd.classificacao_etaria_id = ce.id;""") ;
         
+        ResultSet rs = sql.executeQuery() ;
         List<DVD> lista = new ArrayList<>() ;
         
+        while (rs.next()) {
+            Genero g = new Genero() ;
+            g.setId(rs.getInt("idGen"));
+            
+            ClassificacaoEtaria ce = new ClassificacaoEtaria() ;
+            ce.setId(rs.getInt("idEtaria"));
+            
+            Ator principal = new Ator() ;
+            Ator Coadjuvante = new Ator() ;
+            
+            principal.setId(rs.getInt("atorPrincipal"));
+            Coadjuvante.setId(rs.getInt("atorCoadjuvante"));
+            
+            DVD d = new DVD() ;
+            d.setAtorPrincipal(principal);
+            d.setGenero(g);
+            d.setEtaria(ce);
+            d.setAtorCoadjuvante(Coadjuvante);
+            d.setAnoLancamento(rs.getInt("anoL"));
+            d.setDataLancamento(rs.getDate("dataL"));
+            d.setDuracaoMinutos(rs.getInt("duracao"));
+            d.setTitulo(rs.getString("titulo"));
+            d.setId(rs.getInt("id"));
+            
+            lista.add(d) ;
+        }
+        
+        rs.close();
+        sql.close();
         return lista ;
     }
 
     @Override
     public DVD selecionarPorID(int id) throws SQLException {
+        
+        PreparedStatement sql = getConexao().prepareStatement("""
+                                                              SELECT dvd.id, dvd.titulo, dvd.ano_lancamento anoL, dvd.data_lancamento dataL,
+                                                              dvd.duracao_minutos duracao, ator.id atorPrincipal, ator.id atorCoadjuvante,
+                                                              g.id idGen, ce.id idEtaria
+                                                              FROM dvd, ator, genero g, classificao_etaria ce 
+                                                              WHERE 
+                                                                dvd.id = ? AND
+                                                                dvd.ator_principal_id = ator.id AND
+                                                                dvd.ator_coadjuvante_id = ator.id AND
+                                                                dvd.genero_id = g.id AND
+                                                                dvd.classificacao_etaria_id = ce.id;""") ;
+        
+        sql.setInt(1, id);
+        
+        ResultSet rs = sql.executeQuery() ;
         DVD d = null ;
+        
+        if (rs.next()) {
+            Genero g = new Genero() ;
+            g.setId(rs.getInt("idGen"));
+            
+            ClassificacaoEtaria ce = new ClassificacaoEtaria() ;
+            ce.setId(rs.getInt("idEtaria"));
+            
+            Ator principal = new Ator() ;
+            Ator Coadjuvante = new Ator() ;
+            
+            principal.setId(rs.getInt("atorPrincipal"));
+            Coadjuvante.setId(rs.getInt("atorCoadjuvante"));
+            
+            d = new DVD() ;
+            d.setAtorPrincipal(principal);
+            d.setGenero(g);
+            d.setEtaria(ce);
+            d.setAtorCoadjuvante(Coadjuvante);
+            d.setAnoLancamento(rs.getInt("anoL"));
+            d.setDataLancamento(rs.getDate("dataL"));
+            d.setDuracaoMinutos(rs.getInt("duracao"));
+            d.setTitulo(rs.getString("titulo"));
+            d.setId(rs.getInt("id"));
+            
+        }
+        
+        rs.close();
+        sql.close();
         
         return d ;
                 
