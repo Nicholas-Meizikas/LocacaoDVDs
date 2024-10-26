@@ -35,7 +35,7 @@ public class AtorDAO extends dao<Ator>{
     @Override
     public void atualizar(Ator obj) throws SQLException {
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              INSERT ator 
+                                                              UPDATE ator 
                                                                 SET
                                                                     nome = ?,
                                                                     sobrenome = ?, 
@@ -103,7 +103,7 @@ public class AtorDAO extends dao<Ator>{
         Ator a = null ;
         if (rs.next()) {
             a = new Ator() ;
-            a.setId(rs.getInt("id"));
+            a.setId(id);
             a.setNome(rs.getString("nome"));
             a.setSobrenome(rs.getString("sobrenome"));
             a.setDataEstreia(rs.getDate("data_estreia"));

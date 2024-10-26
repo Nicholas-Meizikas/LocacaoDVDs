@@ -92,12 +92,10 @@ public class DVDDAO extends dao<DVD>{
         
         PreparedStatement sql = getConexao().prepareStatement("""
                                                               SELECT dvd.id, dvd.titulo, dvd.ano_lancamento anoL, dvd.data_lancamento dataL,
-                                                              dvd.duracao_minutos duracao, ator.id atorPrincipal, ator.id atorCoadjuvante,
+                                                              dvd.duracao_minutos duracao, dvd.ator_principal_id atorPrincipal, dvd.ator_coadjuvante_id atorCoadjuvante,
                                                               g.id idGen, ce.id idEtaria
-                                                              FROM dvd, ator, genero g, classificao_etaria ce 
+                                                              FROM dvd, genero g, classificacao_etaria ce 
                                                               WHERE 
-                                                                dvd.ator_principal_id = ator.id AND
-                                                                dvd.ator_coadjuvante_id = ator.id AND
                                                                 dvd.genero_id = g.id AND
                                                                 dvd.classificacao_etaria_id = ce.id;""") ;
         
@@ -110,12 +108,9 @@ public class DVDDAO extends dao<DVD>{
             
             ClassificacaoEtaria ce = new ClassificacaoEtaria() ;
             ce.setId(rs.getInt("idEtaria"));
-            
-            Ator principal = new Ator() ;
-            Ator Coadjuvante = new Ator() ;
-            
-            principal.setId(rs.getInt("atorPrincipal"));
-            Coadjuvante.setId(rs.getInt("atorCoadjuvante"));
+            AtorDAO dao = new AtorDAO() ;
+            Ator principal = dao.selecionarPorID(rs.getInt("atorPrincipal")) ;
+            Ator Coadjuvante = dao.selecionarPorID(rs.getInt("atorCoadjuvante")) ;
             
             DVD d = new DVD() ;
             d.setAtorPrincipal(principal);

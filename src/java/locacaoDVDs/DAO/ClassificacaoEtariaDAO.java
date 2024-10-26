@@ -23,7 +23,7 @@ public class ClassificacaoEtariaDAO extends dao<ClassificacaoEtaria>{
     @Override
     public void salvar(ClassificacaoEtaria obj) throws SQLException {
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              INSERT INTO classicficacao_etaria (descricao)
+                                                              INSERT INTO classificacao_etaria (descricao)
                                                                 VALUES (?) ; """) ;
         
         sql.setString(1, obj.getDescricao());
@@ -36,7 +36,7 @@ public class ClassificacaoEtariaDAO extends dao<ClassificacaoEtaria>{
     @Override
     public void atualizar(ClassificacaoEtaria obj) throws SQLException {
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              UPDATE classicficacao_etaria 
+                                                              UPDATE classificacao_etaria 
                                                               set descricao = ?
                                                                 WHERE id = ? ; """) ;
         
@@ -50,7 +50,7 @@ public class ClassificacaoEtariaDAO extends dao<ClassificacaoEtaria>{
     @Override
     public void excluir(ClassificacaoEtaria obj) throws SQLException {
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              DELETE FROM classicficacao_etaria 
+                                                              DELETE FROM classificacao_etaria 
                                                                 WHERE id = ? ; """) ;
       
         sql.setInt(1, obj.getId());

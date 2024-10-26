@@ -87,8 +87,8 @@ public class GeneroDAO extends dao<Genero>{
     public Genero selecionarPorID(int id) throws SQLException {
         
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              SELECT FROM genero
-                                                              WHERE id = ?""") ;
+                                                              SELECT descricao FROM genero
+                                                              WHERE id = ?;""") ;
         
         sql.setInt(1, id);
         
