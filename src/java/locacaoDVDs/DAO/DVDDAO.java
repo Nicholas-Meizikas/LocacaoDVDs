@@ -38,7 +38,7 @@ public class DVDDAO extends dao<DVD>{
         sql.setInt(5, obj.getAtorPrincipal().getId());
         sql.setInt(6, obj.getAtorCoadjuvante().getId());
         sql.setInt(7, obj.getGenero().getId());
-        sql.setInt(8, obj.getClasEt().getId());
+        sql.setInt(8, obj.getEtaria().getId());
         
         sql.executeUpdate() ;
         sql.close();
@@ -66,7 +66,7 @@ public class DVDDAO extends dao<DVD>{
         sql.setInt(5, obj.getAtorPrincipal().getId());
         sql.setInt(6, obj.getAtorCoadjuvante().getId());
         sql.setInt(7, obj.getGenero().getId());
-        sql.setInt(8, obj.getClasEt().getId());
+        sql.setInt(8, obj.getEtaria().getId());
         sql.setInt(9, obj.getId());
         
         sql.executeUpdate() ;
@@ -81,7 +81,7 @@ public class DVDDAO extends dao<DVD>{
                                                               WHERE id = ? ;""") ;
         
         
-        sql.setInt(1, obj.getClasEt().getId());
+        sql.setInt(1, obj.getEtaria().getId());
         
         sql.executeUpdate() ;
         sql.close();
@@ -140,14 +140,12 @@ public class DVDDAO extends dao<DVD>{
     public DVD selecionarPorID(int id) throws SQLException {
         
         PreparedStatement sql = getConexao().prepareStatement("""
-                                                              SELECT dvd.id, dvd.titulo, dvd.ano_lancamento anoL, dvd.data_lancamento dataL,
-                                                              dvd.duracao_minutos duracao, ator.id atorPrincipal, ator.id atorCoadjuvante,
-                                                              g.id idGen, ce.id idEtaria
-                                                              FROM dvd, ator, genero g, classificao_etaria ce 
+                                                              SELECT dvd.id id, dvd.titulo titulo, dvd.ano_lancamento anoL, dvd.data_lancamento dataL,
+                                                              dvd.duracao_minutos duracao, dvd.ator_principal_id atorPrincipal, 
+                                                              dvd.ator_coadjuvante_id coadjuvante, g.id idGen, ce.id idEtaria
+                                                              FROM dvd, genero g, classificacao_etaria ce 
                                                               WHERE 
                                                                 dvd.id = ? AND
-                                                                dvd.ator_principal_id = ator.id AND
-                                                                dvd.ator_coadjuvante_id = ator.id AND
                                                                 dvd.genero_id = g.id AND
                                                                 dvd.classificacao_etaria_id = ce.id;""") ;
         
@@ -163,11 +161,11 @@ public class DVDDAO extends dao<DVD>{
             ClassificacaoEtaria ce = new ClassificacaoEtaria() ;
             ce.setId(rs.getInt("idEtaria"));
             
-            Ator principal = new Ator() ;
-            Ator Coadjuvante = new Ator() ;
             
-            principal.setId(rs.getInt("atorPrincipal"));
-            Coadjuvante.setId(rs.getInt("atorCoadjuvante"));
+            AtorDAO dao= new AtorDAO() ;
+            Ator principal = dao.selecionarPorID(rs.getInt("atorPrincipal")) ;
+            Ator Coadjuvante = dao.selecionarPorID(rs.getInt("coadjuvante")) ;
+            
             
             d = new DVD() ;
             d.setAtorPrincipal(principal);
