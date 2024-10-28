@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import locacaoDVDs.DAO.GeneroDAO;
 
 /**
@@ -38,14 +36,33 @@ public class GeneroServlet extends HttpServlet {
         GeneroDAO dao = null ;
         RequestDispatcher disp = null ;
         
-        if (acao.equals("inserir")){
-            try {
-                dao = new GeneroDAO() ;
-                
-            } catch (SQLException ex) {
+        try {
+            dao = new GeneroDAO() ;
+            
+            if (acao.equals("inserir")){
+            
+            }
+            
+        } catch (SQLException ex) {
                 ex.printStackTrace();
+        } finally {
+            
+            if (dao != null){
+                try {
+                    dao.fecharConexao();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
+        
+        if (disp != null) {
+            
+        } else {
+            disp = request.getRequestDispatcher("erro.jsp") ;
+            disp.forward(request, response);
+        }
+        
         
     }
 
