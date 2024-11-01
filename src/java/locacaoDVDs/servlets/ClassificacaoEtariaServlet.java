@@ -11,17 +11,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import locacaoDVDs.Entidades.Genero ;
-import locacaoDVDs.DAO.GeneroDAO ;
-import java.sql.SQLException ;
-import jakarta.servlet.RequestDispatcher ;
+import locacaoDVDs.DAO.ClassificacaoEtariaDAO;
+import locacaoDVDs.Entidades.ClassificacaoEtaria ;
+import java.sql.SQLException;
+import jakarta.servlet.RequestDispatcher;
 
 /**
  *
  * @author nicho
  */
-@WebServlet(name = "GeneroServlet", urlPatterns = {"/processaGenero"})
-public class GeneroServlet extends HttpServlet {
+@WebServlet(name = "ClassificacaoEtariaServlet", urlPatterns = {"/processaCE"})
+public class ClassificacaoEtariaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,22 +35,22 @@ public class GeneroServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getParameter("acao") ;
-        GeneroDAO dao = null ;
+        ClassificacaoEtariaDAO dao = null ;
         RequestDispatcher disp = null ;
         
         try{
-            dao = new GeneroDAO() ;
+            dao = new ClassificacaoEtariaDAO() ;
             
             if (acao.equals("inserir")) {
                 
                 String descricao = request.getParameter("descricao") ;
-                Genero e = new Genero() ;
+                ClassificacaoEtaria cE = new ClassificacaoEtaria() ;
                 
-                e.setDescricao(descricao);
+                cE.setDescricao(descricao);
                 
-                dao.salvar(e);
+                dao.salvar(cE);
                 
-                disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
 
                 
             } else if (acao.equals("alterar")) {
@@ -58,39 +58,39 @@ public class GeneroServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id")) ;
                 String decricao = request.getParameter("descricao") ;
                 
-                Genero g = new Genero() ;
-                g.setId(id);
-                g.setDescricao(decricao);
+                ClassificacaoEtaria cE = new ClassificacaoEtaria() ;
+                cE.setId(id);
+                cE.setDescricao(decricao);
                 
-                dao.atualizar(g);
+                dao.atualizar(cE);
                 
-                disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
 
                 
             } else if (acao.equals("excluir")) {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;
                 
-                Genero e = new Genero() ;
-                e.setId(id);
+                ClassificacaoEtaria cE = new ClassificacaoEtaria() ;
+                cE.setId(id);
                 
-                dao.excluir(e);
+                dao.excluir(cE);
                 
-                disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
                 
             } else {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;
-                Genero e = dao.selecionarPorID(id) ;
+                ClassificacaoEtaria e = dao.selecionarPorID(id) ;
                 
-                request.setAttribute("genero", e);
+                request.setAttribute("ClassificacaoEtaria", e);
                 
                 if (acao.equals("prepararAlteracao")) {
                     disp = request.getRequestDispatcher(
-                    "/formularios/Genero/alterar.jsp" );
+                    "/formularios/classificacaoEtaria/alterar.jsp" );
                 } else if (acao.equals("prepararExclusao")) {
                     disp = request.getRequestDispatcher(
-                    "/formularios/Genero/excluir.jsp" );
+                    "/formularios/classificacaoEtaria/excluir.jsp" );
                 }
             }
             
