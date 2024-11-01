@@ -16,6 +16,7 @@ import locacaoDVDs.Entidades.*;
 import java.sql.SQLException;
 import java.sql.Date;
 import jakarta.servlet.RequestDispatcher;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
@@ -46,129 +47,76 @@ public class DVDservlet extends HttpServlet {
             dao = new DVDDAO();
             
             if (acao.equals("inserir")){
-                /*
-                String nome = request.getParameter( "nome" );
-                String sobrenome = request.getParameter( "sobrenome" );
-                String dataNascimento = request.getParameter( "dataNascimento");
-                String cpf = request.getParameter( "cpf" );
-                String email = request.getParameter( "email" );
-                String logradouro = request.getParameter( "logradouro" );
-                String numero = request.getParameter( "numero" );
-                String bairro = request.getParameter( "bairro" );
-                String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt(request.getParameter( "idCidade" ) );
-                */
-                DVD d = new DVD();
-                /*d.setId( idCidade );
                 
-                Cliente c = new Cliente();
-                c.setNome( nome );
-                c.setSobrenome( sobrenome );
+                String titulo = request.getParameter("titulo") ;
+                int anoLancamento = Integer.parseInt(request.getParameter("anoLancamento"));
+                int duracao = Integer.parseInt(request.getParameter("duracao"));
+                String dataLancamento = request.getParameter("dataLancamento");
+                int generoID = Integer.parseInt(request.getParameter("idgenero"));
+                int cEID = Integer.parseInt(request.getParameter("idCE"));
+                int atorP = Integer.parseInt(request.getParameter("idAtorPrincipal"));
+                int atorC = Integer.parseInt(request.getParameter("idAtorCoadjuvante"));
                 
-                if (verificarData(dataNascimento, dtf)){
-                    c.setDataNascimento( Date.valueOf(LocalDate.parse( dataNascimento, dtf ) ) );
-                    
-                } else {
-                    String erro = "Data de nascimento ecolhida não pôde ser aceita" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
+                Genero g = new Genero() ;
+                g.setId(generoID);
                 
-                if (verificarCpf(cpf)) {
-                    c.setCpf( cpf );
-                } else {
-                    String erro = "CPF digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                if (verificarEmail(email)){
-                    c.setEmail( email );
-                } else {
-                    String erro = "Email digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                c.setLogradouro( logradouro );
-                c.setNumero( numero );
-                c.setBairro( bairro );
-                if (verificarCep(cep)){
-                    c.setCep( cep );
-                }else {
-                    String erro = "Cep digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                c.setCidade( d );
-                */
-                dao.salvar( d );
+                ClassificacaoEtaria cE = new ClassificacaoEtaria();
+                cE.setId(cEID);
+                
+                Ator principal = new Ator() ;
+                Ator coad = new Ator() ;
+                principal.setId(atorP);
+                coad.setId(atorC);
+                
+                DVD d = new DVD() ;
+                d.setTitulo(titulo);
+                d.setAnoLancamento(anoLancamento);
+                d.setDuracaoMinutos(duracao);
+                d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
+                d.setGenero(g);
+                d.setEtaria(cE);
+                d.setAtorPrincipal(principal);
+                d.setAtorCoadjuvante(coad);
+                
+                dao.salvar(d);
                 
                 disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
                 
             } else if (acao.equals("alterar")) {
                 
-                /*int id = Integer.parseInt(request.getParameter( "id" ));
-                String nome = request.getParameter( "nome" );
-                String sobrenome = request.getParameter( "sobrenome" );
-                String dataNascimento = request.getParameter( "dataNascimento");
-                String cpf = request.getParameter( "cpf" );
-                String email = request.getParameter( "email" );
-                String logradouro = request.getParameter( "logradouro" );
-                String numero = request.getParameter( "numero" );
-                String bairro = request.getParameter( "bairro" );
-                String cep = request.getParameter( "cep" );
-                int idCidade = Integer.parseInt(request.getParameter( "idCidade" ) );
-                */
-                DVD d = new DVD();
-                /*d.setId( idCidade );
+                int DVDid = Integer.parseInt(request.getParameter("id")) ;
+                String titulo = request.getParameter("titulo") ;
+                int anoLancamento = Integer.parseInt(request.getParameter("anoLancamento"));
+                int duracao = Integer.parseInt(request.getParameter("duracao"));
+                String dataLancamento = request.getParameter("dataLancamento");
+                int generoID = Integer.parseInt(request.getParameter("idgenero"));
+                int cEID = Integer.parseInt(request.getParameter("idCE"));
+                int atorP = Integer.parseInt(request.getParameter("idAtorPrincipal"));
+                int atorC = Integer.parseInt(request.getParameter("idAtorCoadjuvante"));
                 
-                Cliente c = new Cliente();
-                c.setId( id );
-                c.setNome( nome );
-                c.setSobrenome( sobrenome );
-                if (verificarData(dataNascimento, dtf)){
-                    c.setDataNascimento( Date.valueOf(LocalDate.parse( dataNascimento, dtf ) ) );
-                    
-                } else {
-                    String erro = "Data de nascimento ecolhida não pôde ser aceita" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
+                Genero g = new Genero() ;
+                g.setId(generoID);
                 
-                if (verificarCpf(cpf)) {
-                    c.setCpf( cpf );
-                } else {
-                    String erro = "CPF digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                if (verificarEmail(email)){
-                    c.setEmail( email );
-                } else {
-                    String erro = "Email digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                c.setLogradouro( logradouro );
-                c.setNumero( numero );
-                c.setBairro( bairro );
-                if (verificarCep(cep)){
-                    c.setCep( cep );
-                }else {
-                    String erro = "Cep digitado está fora do formato esperado" ;
-                    
-                    request.setAttribute("erro", erro);
-                    disp = request.getRequestDispatcher("/formularios/clientes/erro.jsp") ;
-                }
-                c.setCidade( d );
-                */
-                dao.atualizar( d );
+                ClassificacaoEtaria cE = new ClassificacaoEtaria();
+                cE.setId(cEID);
+                
+                Ator principal = new Ator() ;
+                Ator coad = new Ator() ;
+                principal.setId(atorP);
+                coad.setId(atorC);
+                
+                DVD d = new DVD() ;
+                d.setId(DVDid);
+                d.setTitulo(titulo);
+                d.setAnoLancamento(anoLancamento);
+                d.setDuracaoMinutos(duracao);
+                d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
+                d.setGenero(g);
+                d.setEtaria(cE);
+                d.setAtorPrincipal(principal);
+                d.setAtorCoadjuvante(coad);
+                
+                dao.atualizar(d);
                 
                 disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
                 
@@ -176,6 +124,7 @@ public class DVDservlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter( "id" ));
                 
                 DVD d = new DVD();
+                
                 d.setId( id );
                 
                 dao.excluir( d );
@@ -183,17 +132,16 @@ public class DVDservlet extends HttpServlet {
                 disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
                 
             } else {
-                
                 int id = Integer.parseInt(request.getParameter( "id" ));
                 
-                DVD c = dao.selecionarPorID(id);
-                request.setAttribute( "cliente", c );
+                DVD d = dao.selecionarPorID(id);
+                request.setAttribute( "DVD", d );
                 
                 if ( acao.equals( "prepararAlteracao" ) ) {
-                    disp = request.getRequestDispatcher("/formularios/clientes/alterar.jsp" );
+                    disp = request.getRequestDispatcher("/formularios/DVDs/alterar.jsp" );
                     
                 } else if ( acao.equals( "prepararExclusao" ) ) {
-                    disp = request.getRequestDispatcher("/formularios/clientes/excluir.jsp" );
+                    disp = request.getRequestDispatcher("/formularios/DVDs/excluir.jsp" );
                 }
 
             }
