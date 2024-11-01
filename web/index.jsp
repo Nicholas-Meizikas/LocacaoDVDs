@@ -11,6 +11,7 @@
         <title>Home</title>
     </head>
     <body class="Index">
+        <a href="${cp}/formularios/Atores/listagem.jsp">Listagem de Atores</a><br/>
         <a href="${cp}/formularios/classificacaoEtaria/listagem.jsp">Listagem de Classificações</a><br/>
         <a href="${cp}/formularios/Genero/listagem.jsp">Listagem de Generos</a>
     </body>

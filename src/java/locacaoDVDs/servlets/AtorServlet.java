@@ -16,6 +16,8 @@ import locacaoDVDs.Entidades.Ator;
 import java.sql.SQLException;
 import jakarta.servlet.RequestDispatcher;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -39,6 +41,7 @@ public class AtorServlet extends HttpServlet {
         String acao = request.getParameter("acao") ;
         AtorDAO dao = null ;
         RequestDispatcher disp = null ;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         try{
             dao = new AtorDAO();
@@ -52,12 +55,11 @@ public class AtorServlet extends HttpServlet {
                 
                 a.setNome(nome);
                 a.setSobrenome(sobrenome);
-                a.setDataEstreia(Date.valueOf(data));
-                
+                a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
+                System.out.println(a.toString());
                 dao.salvar(a);
                 
-                disp = request.getRequestDispatcher(
-                    "/formularios/Atores/listagem.jsp" );
+                disp = request.getRequestDispatcher("/formularios/Atores/listagem.jsp");
 
                 
             } else if (acao.equals("alterar")) {
@@ -72,7 +74,7 @@ public class AtorServlet extends HttpServlet {
                 
                 a.setNome(nome);
                 a.setSobrenome(sobrenome);
-                a.setDataEstreia(Date.valueOf(data));
+                a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
                 
                 dao.atualizar(a);
                 
@@ -97,7 +99,7 @@ public class AtorServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id")) ;
                 Ator e = dao.selecionarPorID(id) ;
                 
-                request.setAttribute("classificacaoEtaria", e);
+                request.setAttribute("Ator", e);
                 
                 if (acao.equals("prepararAlteracao")) {
                     disp = request.getRequestDispatcher(
