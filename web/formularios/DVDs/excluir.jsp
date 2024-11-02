@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ExcluirDVD">
+    <body>
 
         <h1>Excluir DVD</h1>
 

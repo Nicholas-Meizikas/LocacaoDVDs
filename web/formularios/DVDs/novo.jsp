@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="NovoDVD">
+    <body>
 
         <h1>Novo DVD</h1>
 

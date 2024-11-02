@@ -3,16 +3,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : 31 de out. de 2024, 17:58:51
+    Created on : 2 de nov. de 2024, 14:39:07
     Author     : nicho
 */
-*{
-    background-color: lightblue ; 
+
+body{
+    background-color: #484759 ; 
+    text-align: center;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 7px;
+    font-weight: bold;
 }
 
-.AlterarGenero *{
-    background-color: lightgreen;
+body a{
+    border: 1px solid black;
+    border-radius: 25%;   
 }
-.NovoClasseEtaria *{
-    background-color: lightgreen;
+
+input{
+    background-color:#99ff9d;
 }

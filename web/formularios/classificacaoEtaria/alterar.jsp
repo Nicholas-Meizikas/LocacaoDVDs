@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="AlterarClasseEtaria">
+    <body>
 
     <h1>Alterar Classificação Etária</h1>
 

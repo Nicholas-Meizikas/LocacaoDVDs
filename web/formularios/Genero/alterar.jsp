@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="AlterarGenero">
+    <body>
 
     <h1>Alterar Genero</h1>
 

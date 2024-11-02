@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ListagemAtor">
+    <body>
         <h1>Atores Cadastrados</h1>
 
         <table>

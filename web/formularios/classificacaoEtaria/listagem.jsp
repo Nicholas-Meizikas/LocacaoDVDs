@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ListagemClasseEtaria">
+    <body>
         <h1>Classificações Etárias Cadastradas</h1>
 
         <table>

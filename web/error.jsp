@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
         <title>Erro</title>
     </head>
-    <body class="Erros">
+    <body>
         
         <form method="POST" action="${cp}${requestScope.erro.processa}">
             <input name="acao" type="hidden" value="erro">

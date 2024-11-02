@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ListagemDVDs">
+    <body>
         <h1>DVDs Cadastradas</h1>
 
         <table>

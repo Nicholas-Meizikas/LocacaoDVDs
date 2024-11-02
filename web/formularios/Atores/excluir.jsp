@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ExcluirAtor">
+    <body>
 
         <h1>Excluir Ator/Atris</h1>
 

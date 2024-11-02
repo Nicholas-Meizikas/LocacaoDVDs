@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ExcluirGenero">
+    <body>
 
         <h1>Excluir Genero</h1>
 

@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ListagemGenero">
+    <body>
         <h1>Generos Cadastrados</h1>
 
         <table class="tabelaListagem">

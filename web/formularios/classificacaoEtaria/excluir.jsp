@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="ExcluirClasseEtaria">
+    <body>
 
         <h1>Excluir Classificação Etária</h1>
 

@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="AlterarAtor">
+    <body>
 
     <h1>Alterar Ator</h1>
 

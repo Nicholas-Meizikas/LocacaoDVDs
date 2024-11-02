@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="AlterarDVD">
+    <body>
 
     <h1>Alterar DVD</h1>
 

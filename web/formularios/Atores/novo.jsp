@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="NovoAtor">
+    <body>
 
         <h1>Novo(a) Ator(a)</h1>
 

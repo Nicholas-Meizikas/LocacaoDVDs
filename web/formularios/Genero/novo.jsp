@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
     </head>
 
-    <body class="NovoGenero">
+    <body>
 
         <h1>Novo Genero</h1>
 

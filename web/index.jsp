@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
         <title>Home</title>
     </head>
-    <body class="Index">
+    <body>
         <a href="${cp}/formularios/DVDs/listagem.jsp">Listagem de DVDs</a><br/>
         <a href="${cp}/formularios/Atores/listagem.jsp">Listagem de Atores</a><br/>
         <a href="${cp}/formularios/classificacaoEtaria/listagem.jsp">Listagem de Classificações</a><br/>
