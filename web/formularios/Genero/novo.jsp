@@ -21,7 +21,7 @@
 
             <table>
                 <tr>
-                    <td>Desccricao:</td>
+                    <td>Descricao:</td>
                     <td>
                     <input name="descricao" type="text" required/>
                     </td>

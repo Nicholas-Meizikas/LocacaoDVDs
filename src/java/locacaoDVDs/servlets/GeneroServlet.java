@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import locacaoDVDs.Entidades.Genero ;
+import locacaoDVDs.Entidades.Erro ;
 import locacaoDVDs.DAO.GeneroDAO ;
 import java.sql.SQLException ;
 import jakarta.servlet.RequestDispatcher ;
@@ -34,6 +35,7 @@ public class GeneroServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = "/processaGenero";
         String acao = request.getParameter("acao") ;
         GeneroDAO dao = null ;
         RequestDispatcher disp = null ;
@@ -44,28 +46,50 @@ public class GeneroServlet extends HttpServlet {
             if (acao.equals("inserir")) {
                 
                 String descricao = request.getParameter("descricao") ;
-                Genero e = new Genero() ;
+                Genero g = new Genero() ;
                 
-                e.setDescricao(descricao);
-                
-                dao.salvar(e);
-                
-                disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                if(Character.isUpperCase(descricao.charAt(0))){
+                    g.setDescricao(descricao);
 
+                    dao.salvar(g);
+
+                    disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                } else {
+                    Erro er = new Erro() ;
+                    
+                    er.setProcessa(url);
+                    er.setCaminho("/formularios/Genero/novo.jsp");
+                    er.setMensagem("A descricao desse genero não é Válida");
+                    
+                    request.setAttribute("erro", er);
+                    disp = request.getRequestDispatcher("/error.jsp" );
+                }
                 
             } else if (acao.equals("alterar")) {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;
-                String decricao = request.getParameter("descricao") ;
+                String descricao = request.getParameter("descricao") ;
                 
                 Genero g = new Genero() ;
                 g.setId(id);
-                g.setDescricao(decricao);
                 
-                dao.atualizar(g);
-                
-                disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                if(Character.isUpperCase(descricao.charAt(0))){
+                    g.setDescricao(descricao);
 
+                    dao.atualizar(g);
+
+                    disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
+                } else {
+                    Erro er = new Erro() ;
+                    
+                    er.setProcessa(url);
+                    er.setId(id);
+                    er.setCaminho("/formularios/Genero/alterar.jsp");
+                    er.setMensagem("A descricao desse genero não é Válida");
+                    
+                    request.setAttribute("erro", er);
+                    disp = request.getRequestDispatcher("/error.jsp" );
+                }
                 
             } else if (acao.equals("excluir")) {
                 
@@ -78,12 +102,26 @@ public class GeneroServlet extends HttpServlet {
                 
                 disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );
                 
+            } else if (acao.equals("erro")) {
+                    
+                    String caminho = request.getParameter("caminho") ;
+                    
+                    Genero g = null ;
+                    
+                    if (caminho.equals("/formularios/Genero/alterar.jsp")){
+                        int id = Integer.parseInt(request.getParameter("id"));
+                        g = dao.selecionarPorID(id) ;
+                        request.setAttribute("genero", g);
+                    }
+                    
+                    disp = request.getRequestDispatcher(caminho) ;
+                    
             } else {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;
-                Genero e = dao.selecionarPorID(id) ;
+                Genero g = dao.selecionarPorID(id) ;
                 
-                request.setAttribute("genero", e);
+                request.setAttribute("genero", g);
                 
                 if (acao.equals("prepararAlteracao")) {
                     disp = request.getRequestDispatcher(

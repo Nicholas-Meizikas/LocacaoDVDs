@@ -38,6 +38,7 @@ public class DVDservlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = "/processaDVD" ;
         String acao = request.getParameter("acao") ;
         DVDDAO dao = null ;
         RequestDispatcher disp = null ;
@@ -65,23 +66,46 @@ public class DVDservlet extends HttpServlet {
                 
                 Ator principal = new Ator() ;
                 Ator coad = new Ator() ;
-                principal.setId(atorP);
-                coad.setId(atorC);
                 
                 DVD d = new DVD() ;
-                d.setTitulo(titulo);
-                d.setAnoLancamento(anoLancamento);
-                d.setDuracaoMinutos(duracao);
-                d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
-                d.setGenero(g);
-                d.setEtaria(cE);
-                d.setAtorPrincipal(principal);
-                d.setAtorCoadjuvante(coad);
+                if ((atorP != atorC) && (Character.isUpperCase(titulo.charAt(0))) &&
+                        (anoLancamento == Integer.parseInt(dataLancamento.substring(0, 4))) &&
+                        (duracao > 10)){
+                    principal.setId(atorP);
+                    coad.setId(atorC);
                 
-                dao.salvar(d);
-                
-                disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
-                
+                    d.setTitulo(titulo);
+                    
+                    d.setAnoLancamento(anoLancamento);
+                    d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
+                    d.setDuracaoMinutos(duracao);
+                    
+                    d.setGenero(g);
+                    d.setEtaria(cE);
+                    d.setAtorPrincipal(principal);
+                    d.setAtorCoadjuvante(coad);
+
+                    dao.salvar(d);
+
+                    disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
+                } else {
+                    Erro e = new Erro() ;
+                    e.setCaminho("/formularios/DVDs/novo.jsp");
+                    e.setProcessa(url);
+                    
+                    if (atorP == atorC) {
+                        e.setMensagem("Um ator principal não pode ser um ator coadjuvante");
+                    } else if (Character.isLowerCase(titulo.charAt(0))){
+                        e.setMensagem("O titulo desse DVD não é valido");
+                    } else if (anoLancamento == Integer.parseInt(dataLancamento.substring(0, 4))){
+                        e.setMensagem("A data de lançamento difere do ano de Lançamento");
+                    } else if (duracao <= 10) {
+                        e.setMensagem("Não é possível um DVD ser tão rápido assim");
+                    }
+                    
+                    request.setAttribute("erro", e);
+                    disp = request.getRequestDispatcher("/error.jsp") ;
+                }
             } else if (acao.equals("alterar")) {
                 
                 int DVDid = Integer.parseInt(request.getParameter("id")) ;
@@ -102,23 +126,57 @@ public class DVDservlet extends HttpServlet {
                 
                 Ator principal = new Ator() ;
                 Ator coad = new Ator() ;
-                principal.setId(atorP);
-                coad.setId(atorC);
                 
                 DVD d = new DVD() ;
-                d.setId(DVDid);
-                d.setTitulo(titulo);
-                d.setAnoLancamento(anoLancamento);
-                d.setDuracaoMinutos(duracao);
-                d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
-                d.setGenero(g);
-                d.setEtaria(cE);
-                d.setAtorPrincipal(principal);
-                d.setAtorCoadjuvante(coad);
-                
-                dao.atualizar(d);
-                
-                disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
+                if ((atorP != atorC) && (Character.isUpperCase(titulo.charAt(0))) &&
+                        (anoLancamento == Integer.parseInt(dataLancamento.substring(0, 4))) &&
+                        (duracao > 10)){
+                    
+                    principal.setId(atorP);
+                    coad.setId(atorC);
+                    
+                    d.setId(DVDid);
+                    d.setTitulo(titulo);
+                    
+                    d.setAnoLancamento(anoLancamento);
+                    d.setDataLancamento(Date.valueOf(LocalDate.parse(dataLancamento, dtf)));
+                    d.setDuracaoMinutos(duracao);
+                    
+                    d.setGenero(g);
+                    d.setEtaria(cE);
+                    d.setAtorPrincipal(principal);
+                    d.setAtorCoadjuvante(coad);
+
+                    dao.atualizar(d);
+
+                    disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
+                } else {
+                    Erro e = new Erro() ;
+                    e.setCaminho("/formularios/DVDs/alterar.jsp");
+                    e.setId(DVDid);
+                    e.setProcessa(url);
+                    
+                    if (atorP == atorC) {
+                        
+                        e.setMensagem("Um ator principal não pode ser um ator coadjuvante");
+                        
+                    } else if (Character.isLowerCase(titulo.charAt(0))){
+                        
+                        e.setMensagem("O titulo desse DVD não é valido");
+                        
+                    } else if (anoLancamento != Integer.parseInt(dataLancamento.substring(0, 4))){
+                        
+                        e.setMensagem("A data de lançamento difere do ano de Lançamento");
+                        
+                    } else if (duracao <= 10) {
+                        
+                        e.setMensagem("Não é possível um DVD ser tão rápido assim");
+                        
+                    }
+                    
+                    request.setAttribute("erro", e);
+                    disp = request.getRequestDispatcher("/error.jsp") ;
+                }
                 
             } else if (acao.equals("excluir")) {
                 int id = Integer.parseInt(request.getParameter( "id" ));
@@ -131,6 +189,20 @@ public class DVDservlet extends HttpServlet {
                 
                 disp = request.getRequestDispatcher("/formularios/DVDs/listagem.jsp" );
                 
+            } else if (acao.equals("erro")) {
+                    
+                    String caminho = request.getParameter("caminho") ;
+                    
+                    DVD d = null ;
+                    
+                    if (caminho.equals("/formularios/DVDs/alterar.jsp")){
+                        int id = Integer.parseInt(request.getParameter("id"));
+                        d = dao.selecionarPorID(id) ;
+                        request.setAttribute("DVD", d);
+                    }
+                    
+                    disp = request.getRequestDispatcher(caminho) ;
+                    
             } else {
                 int id = Integer.parseInt(request.getParameter( "id" ));
                 

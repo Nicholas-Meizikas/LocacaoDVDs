@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import locacaoDVDs.DAO.ClassificacaoEtariaDAO;
 import locacaoDVDs.Entidades.ClassificacaoEtaria ;
+import locacaoDVDs.Entidades.Erro ;
 import java.sql.SQLException;
 import jakarta.servlet.RequestDispatcher;
 
@@ -34,6 +35,7 @@ public class ClassificacaoEtariaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = "/processaCE" ;
         String acao = request.getParameter("acao") ;
         ClassificacaoEtariaDAO dao = null ;
         RequestDispatcher disp = null ;
@@ -44,28 +46,53 @@ public class ClassificacaoEtariaServlet extends HttpServlet {
             if (acao.equals("inserir")) {
                 
                 String descricao = request.getParameter("descricao") ;
+                
                 ClassificacaoEtaria cE = new ClassificacaoEtaria() ;
+                if(Character.isUpperCase(descricao.charAt(0))){
+                    cE.setDescricao(descricao);
                 
-                cE.setDescricao(descricao);
+                    dao.salvar(cE);
                 
-                dao.salvar(cE);
-                
-                disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
+                    disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
 
+                } else {
+                    Erro er = new Erro() ;
+                    
+                    er.setProcessa(url);
+                    er.setCaminho("/formularios/classificacaoEtaria/novo.jsp");
+                    er.setMensagem("A descricao dessa classificação etária não é Válida");
+                    
+                    request.setAttribute("erro", er);
+                    disp = request.getRequestDispatcher("/error.jsp" );
+                }
                 
             } else if (acao.equals("alterar")) {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;
-                String decricao = request.getParameter("descricao") ;
+                String descricao = request.getParameter("descricao") ;
                 
                 ClassificacaoEtaria cE = new ClassificacaoEtaria() ;
-                cE.setId(id);
-                cE.setDescricao(decricao);
                 
-                dao.atualizar(cE);
+                if(Character.isUpperCase(descricao.charAt(0))){
+                    cE.setId(id);
+                    cE.setDescricao(descricao);
                 
-                disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
+                    dao.atualizar(cE);
+                
+                    disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
 
+                } else {
+                    Erro er = new Erro() ;
+                    
+                    er.setProcessa(url);
+                    er.setId(id);
+                    er.setCaminho("/formularios/classificacaoEtaria/alterar.jsp");
+                    er.setMensagem("A descricao dessa classificação etária não é Válida");
+                    
+                    request.setAttribute("erro", er);
+                    disp = request.getRequestDispatcher("/error.jsp" );
+                }
+                
                 
             } else if (acao.equals("excluir")) {
                 
@@ -78,6 +105,20 @@ public class ClassificacaoEtariaServlet extends HttpServlet {
                 
                 disp = request.getRequestDispatcher("/formularios/classificacaoEtaria/listagem.jsp" );
                 
+            } else if (acao.equals("erro")) {
+                    
+                    String caminho = request.getParameter("caminho") ;
+                    
+                    ClassificacaoEtaria g = null ;
+                    
+                    if (caminho.equals("/formularios/classificacaoEtaria/alterar.jsp")){
+                        int id = Integer.parseInt(request.getParameter("id"));
+                        g = dao.selecionarPorID(id) ;
+                        request.setAttribute("ClassificacaoEtaria", g);
+                    }
+                    
+                    disp = request.getRequestDispatcher(caminho) ;
+                    
             } else {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;

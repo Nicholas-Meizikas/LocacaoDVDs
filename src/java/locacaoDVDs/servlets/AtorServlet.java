@@ -18,6 +18,7 @@ import jakarta.servlet.RequestDispatcher;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import locacaoDVDs.Entidades.Erro;
 
 /**
  *
@@ -37,7 +38,7 @@ public class AtorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String url = "/processaAtor" ;
         String acao = request.getParameter("acao") ;
         AtorDAO dao = null ;
         RequestDispatcher disp = null ;
@@ -51,16 +52,47 @@ public class AtorServlet extends HttpServlet {
                 String nome = request.getParameter("nome") ;
                 String sobrenome = request.getParameter("sobrenome") ;
                 String data = request.getParameter("data") ;
+                
                 Ator a = new Ator() ;
                 
-                a.setNome(nome);
-                a.setSobrenome(sobrenome);
-                a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
-                System.out.println(a.toString());
-                dao.salvar(a);
                 
-                disp = request.getRequestDispatcher("/formularios/Atores/listagem.jsp");
+                if (Character.isUpperCase(nome.charAt(0)) && Character.isUpperCase(sobrenome.charAt(0)) ){
+                    a.setNome(nome);
+                    a.setSobrenome(sobrenome);
+                    a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
+                    System.out.println(a.toString());
 
+                    dao.salvar(a);
+
+                    disp = request.getRequestDispatcher("/formularios/Atores/listagem.jsp");
+                } else {
+                    
+                    Erro er = new Erro() ;
+                    er.setProcessa(url);
+                    er.setCaminho("/formularios/Atores/novo.jsp");
+                    
+                    if (Character.isLowerCase(nome.charAt(0))){
+                     
+                        er.setMensagem("O nome desse Ator/Atriz não é Válido");
+
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    } else if (Character.isLowerCase(sobrenome.charAt(0))) {
+                        
+                        er.setMensagem("O sobrenome desse Ator/Atriz não é Válido");
+
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    } else {
+                        
+                        er.setMensagem("a data de estreia desse Ator/Atriz não é Válida");
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    }
+                }
                 
             } else if (acao.equals("alterar")) {
                 
@@ -70,17 +102,47 @@ public class AtorServlet extends HttpServlet {
                 String data = request.getParameter("data") ;
                 
                 Ator a = new Ator() ;
-                a.setId(id);
                 
-                a.setNome(nome);
-                a.setSobrenome(sobrenome);
-                a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
-                
-                dao.atualizar(a);
-                
-                disp = request.getRequestDispatcher(
-                    "/formularios/Atores/listagem.jsp" );
+                if (Character.isUpperCase(nome.charAt(0)) && Character.isUpperCase(sobrenome.charAt(0)) && data != null){
+                    a.setId(id);
+                    a.setNome(nome);
+                    a.setSobrenome(sobrenome);
+                    a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
+                    System.out.println(a.toString());
 
+                    dao.atualizar(a);
+
+                    disp = request.getRequestDispatcher("/formularios/Atores/listagem.jsp");
+                } else {
+                    
+                    Erro er = new Erro() ;
+                    er.setProcessa(url);
+                    er.setId(id);
+                    er.setCaminho("/formularios/Atores/alterar.jsp");
+                    
+                    if (Character.isLowerCase(nome.charAt(0))){
+                    
+                        er.setMensagem("O nome desse Ator/Atriz não é Válido");
+
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    } else if (Character.isLowerCase(sobrenome.charAt(0))) {
+                        
+                        er.setMensagem("O sobrenome desse Ator/Atriz não é Válido");
+
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    } else {
+                        
+                        er.setMensagem("a data de estreia desse Ator/Atriz não é Válida");
+
+                        request.setAttribute("erro", er);
+                        disp = request.getRequestDispatcher("/error.jsp" );
+                        
+                    }
+                }
                 
             } else if (acao.equals("excluir")) {
                 
@@ -94,6 +156,20 @@ public class AtorServlet extends HttpServlet {
                 disp = request.getRequestDispatcher(
                     "/formularios/Atores/listagem.jsp" );
                 
+            } else if (acao.equals("erro")) {
+                    
+                    String caminho = request.getParameter("caminho") ;
+                    
+                    Ator a = null ;
+                    
+                    if (caminho.equals("/formularios/Genero/alterar.jsp")){
+                        int id = Integer.parseInt(request.getParameter("id"));
+                        a = dao.selecionarPorID(id) ;
+                        request.setAttribute("Ator", a);
+                    }
+                    
+                    disp = request.getRequestDispatcher(caminho) ;
+                    
             } else {
                 
                 int id = Integer.parseInt(request.getParameter("id")) ;

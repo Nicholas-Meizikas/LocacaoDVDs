@@ -61,7 +61,7 @@
                         <select name="idAtorPrincipal" required>
                             <c:forEach items="${atorServicos.todos}" var="ator">
                                 <c:choose>
-                                    <c:when test="${ator.id} == ${requestScope.DVD.atorPrincipal.id}">
+                                    <c:when test="${requestScope.DVD.atorPrincipal.id eq ator.id}">
                                         <option value="${ator.id}" selected>
                                             ${ator.nome} ${ator.sobrenome}
                                         </option>
@@ -82,7 +82,7 @@
                         <select name="idAtorCoadjuvante" required>
                             <c:forEach items="${atorServicos.todos}" var="ator">
                                 <c:choose>
-                                    <c:when test="${ator.id} == ${requestScope.DVD.atorCoadjuvante.id}">
+                                    <c:when test="${requestScope.DVD.atorCoadjuvante.id eq ator.id}">
                                         <option value="${ator.id}" selected>
                                             ${ator.nome} ${ator.sobrenome}
                                         </option>
@@ -106,7 +106,7 @@
                         <select name="idgenero" required>
                             <c:forEach items="${generoServicos.todos}" var="genero">
                                 <c:choose>
-                                    <c:when test="${genero.id} == ${requestScope.DVD.genero.id}">
+                                    <c:when test="${requestScope.DVD.genero.id eq genero.id}">
                                         <option value="${genero.id}" selected>
                                             ${genero.descricao}
                                         </option>
@@ -130,7 +130,7 @@
                         <select name="idCE" required>
                             <c:forEach items="${CEServicos.todos}" var="CE">
                                 <c:choose>
-                                    <c:when test="${CE.id} == ${requestScope.DVD.genero.id}">
+                                    <c:when test="${requestScope.DVD.Etaria.id eq CE.id}">
                                         <option value="${CE.id}" selected>
                                             ${CE.descricao}
                                         </option>
