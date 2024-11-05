@@ -14,7 +14,33 @@
         <title>Alterar DVD</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="${cp}/css/estilos.css"/>
+        <style>
+            body{
+                background-color: #484759 ; 
+                text-align: center;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 25px;
+                font-weight: bold;
+                text-shadow: 2px -2px #ebdada;
+            }
+
+            a{
+                color: #232324;
+                border: 3px solid #e4e7ed;
+                border-radius: 25%;
+                text-decoration: none ;
+                padding: 10px;
+            }
+            
+            a:hover{
+                text-decoration: underline ;
+            }
+
+            table{
+                margin: auto;
+                color: #232324;
+            }
+        </style>
     </head>
 
     <body>
@@ -130,7 +156,7 @@
                         <select name="idCE" required>
                             <c:forEach items="${CEServicos.todos}" var="CE">
                                 <c:choose>
-                                    <c:when test="${requestScope.DVD.Etaria.id eq CE.id}">
+                                    <c:when test="${requestScope.DVD.etaria.id eq CE.id}">
                                         <option value="${CE.id}" selected>
                                             ${CE.descricao}
                                         </option>
@@ -147,6 +173,7 @@
                 </tr>
                 <tr>
                     <td>
+                        <br/>
                         <a href="${cp}/formularios/DVDs/listagem.jsp">
                             Voltar
                         </a>

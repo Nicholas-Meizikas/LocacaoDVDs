@@ -7,8 +7,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${cp}/css/estilos.css"/>
         <title>Home</title>
+        <style>
+            body{
+                background-color: #484759 ; 
+                text-align: center;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 25px;
+                font-weight: bold;
+            }
+
+            body a{
+                color: #e4e7ed;
+                border: 1px solid black;
+                border-radius: 25%;
+                text-decoration: none ;
+            }
+            
+            body a:hover{
+                text-decoration: underline ;
+            }
+            
+            input{
+                background-color:#99ff9d;
+            }
+        </style>
     </head>
     <body>
         <a href="${cp}/formularios/DVDs/listagem.jsp">Listagem de DVDs</a><br/>

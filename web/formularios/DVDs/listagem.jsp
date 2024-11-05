@@ -14,7 +14,31 @@
         <title>DVDs Cadastrados</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="${cp}/css/estilos.css"/>
+        <style>
+            body{
+                background-color: #484759 ; 
+                text-align: center;
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 25px;
+                font-weight: bold;
+            }
+
+            a{
+                color: #e4e7ed;
+                border: 3px solid #e4e7ed;
+                border-radius: 25%;
+                text-decoration: none ;
+                padding: 10px;
+            }
+            
+            a:hover{
+                text-decoration: underline ;
+            }
+
+            table{
+                color: #e4e7ed;
+            }
+        </style>
     </head>
 
     <body>
