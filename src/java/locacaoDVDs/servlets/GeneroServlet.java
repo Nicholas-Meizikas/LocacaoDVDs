@@ -50,7 +50,8 @@ public class GeneroServlet extends HttpServlet {
                 
                 if(Character.isUpperCase(descricao.charAt(0))){
                     g.setDescricao(descricao);
-
+                    
+                    System.out.println(g.toString());
                     dao.salvar(g);
 
                     disp = request.getRequestDispatcher("/formularios/Genero/listagem.jsp" );

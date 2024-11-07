@@ -19,6 +19,7 @@ public abstract class dao<Tipo> {
     public dao() throws SQLException {
         conexao = ConnecitonFactory.getConnection() ;
     }
+    
     public Connection getConexao() {
         return conexao;
     }

@@ -97,7 +97,7 @@ public class DVDservlet extends HttpServlet {
                         e.setMensagem("Um ator principal não pode ser um ator coadjuvante");
                     } else if (Character.isLowerCase(titulo.charAt(0))){
                         e.setMensagem("O titulo desse DVD não é valido");
-                    } else if (anoLancamento == Integer.parseInt(dataLancamento.substring(0, 4))){
+                    } else if (anoLancamento != Integer.parseInt(dataLancamento.substring(0, 4))){
                         e.setMensagem("A data de lançamento difere do ano de Lançamento");
                     } else if (duracao <= 10) {
                         e.setMensagem("Não é possível um DVD ser tão rápido assim");

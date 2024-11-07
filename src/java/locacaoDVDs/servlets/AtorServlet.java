@@ -56,7 +56,7 @@ public class AtorServlet extends HttpServlet {
                 Ator a = new Ator() ;
                 
                 
-                if (Character.isUpperCase(nome.charAt(0)) && Character.isUpperCase(sobrenome.charAt(0)) ){
+                if (Character.isUpperCase(nome.charAt(0)) && Character.isUpperCase(sobrenome.charAt(0)) && data!=null){
                     a.setNome(nome);
                     a.setSobrenome(sobrenome);
                     a.setDataEstreia(Date.valueOf(LocalDate.parse(data, dtf)));
@@ -75,23 +75,21 @@ public class AtorServlet extends HttpServlet {
                      
                         er.setMensagem("O nome desse Ator/Atriz não é Válido");
 
-                        request.setAttribute("erro", er);
-                        disp = request.getRequestDispatcher("/error.jsp" );
                         
                     } else if (Character.isLowerCase(sobrenome.charAt(0))) {
                         
                         er.setMensagem("O sobrenome desse Ator/Atriz não é Válido");
-
-                        request.setAttribute("erro", er);
-                        disp = request.getRequestDispatcher("/error.jsp" );
-                        
+   
+                    } else if (data == null){
+                        er.setMensagem("Uma data de Estreia precisa ser atribuida");
                     } else {
                         
                         er.setMensagem("a data de estreia desse Ator/Atriz não é Válida");
-                        request.setAttribute("erro", er);
-                        disp = request.getRequestDispatcher("/error.jsp" );
                         
                     }
+                    request.setAttribute("erro", er);
+                    disp = request.getRequestDispatcher("/error.jsp" );
+                        
                 }
                 
             } else if (acao.equals("alterar")) {

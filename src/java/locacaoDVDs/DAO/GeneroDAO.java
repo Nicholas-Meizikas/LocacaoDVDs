@@ -20,6 +20,7 @@ public class GeneroDAO extends dao<Genero>{
     public GeneroDAO() throws SQLException {
         super() ;
     }
+    
     @Override
     public void salvar(Genero obj) throws SQLException {
         PreparedStatement sql = getConexao().prepareStatement("""
