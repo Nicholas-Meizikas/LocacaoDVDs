@@ -111,6 +111,7 @@ public class DVDDAO extends dao<DVD>{
             ClassificacaoEtaria ce = new ClassificacaoEtaria() ;
             ce.setId(rs.getInt("idEtaria"));
             ce.setDescricao(rs.getString("descricaoCE"));
+            
             AtorDAO dao = new AtorDAO() ;
             Ator principal = dao.selecionarPorID(rs.getInt("atorPrincipal")) ;
             Ator Coadjuvante = dao.selecionarPorID(rs.getInt("atorCoadjuvante")) ;
