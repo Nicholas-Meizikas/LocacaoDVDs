@@ -160,7 +160,7 @@ public class AtorServlet extends HttpServlet {
                     
                     Ator a = null ;
                     
-                    if (caminho.equals("/formularios/Genero/alterar.jsp")){
+                    if (caminho.equals("/formularios/Atores/alterar.jsp")){
                         int id = Integer.parseInt(request.getParameter("id"));
                         a = dao.selecionarPorID(id) ;
                         request.setAttribute("Ator", a);

@@ -69,7 +69,7 @@
         </table>
     <p>
         <a href="${cp}/formularios/DVDs/novo.jsp">
-            Novo Ator/Atris
+            Novo DVD
         </a>
     </p>
 
