@@ -123,7 +123,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Genero:</td>
+                    <td>Classificação etária:</td>
                     <td>
                         <jsp:useBean id="CEServicos" scope="page"
                                      class="locacaoDVDs.services.ClassificacaoEtariaServices"/>

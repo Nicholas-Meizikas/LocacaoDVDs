@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/src/java/locacaoDVDs/servlets/AtorServlet.java</file>
-            <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/web/error.jsp</file>
+            <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/web/formularios/DVDs/excluir.jsp</file>
+            <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/web/formularios/DVDs/alterar.jsp</file>
+            <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/web/formularios/DVDs/novo.jsp</file>
             <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/src/java/locacaoDVDs/servlets/DVDservlet.java</file>
             <file>file:/C:/Users/nicho/Documents/GitHub/Introducao%20a%20sistemas%20web/LocacaoDVDs/web/formularios/DVDs/listagem.jsp</file>
         </group>

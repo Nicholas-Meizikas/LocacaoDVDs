@@ -8,7 +8,7 @@
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
 <html>
     <head>
-        <title>Nova Classificação Etária</title>
+        <title>Nova DVD</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="${cp}/css/estilos.css"/>
@@ -91,7 +91,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Genero:</td>
+                    <td>Classificação Etária:</td>
                     <td>
                         <jsp:useBean id="CEServicos" scope="page"
                                      class="locacaoDVDs.services.ClassificacaoEtariaServices"/>
